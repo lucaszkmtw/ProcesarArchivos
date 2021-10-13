@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.timezone import now
-
+from django.core.files import File
 
 # Create your models here.
 class ArchivoHiscar(models.Model):
@@ -30,9 +30,7 @@ class ArchivoHiscar(models.Model):
         related_name="usuario_cargador")
    
     upload = models.FileField(upload_to='uploads/', null=True)
-    peso = models.BigIntegerField()
-    cant_lineas = models.IntegerField(null=True, blank=True, default=None)
     fecha = models.DateTimeField(default=now)
-    split = models.BooleanField(default=False)
-    parsed = models.BooleanField(default=False, null=True)
-    priority = models.PositiveIntegerField(default=0, blank=False, null=False)
+  
+    def __str__(self):
+        return f'{self.fileHash}'.upper()
