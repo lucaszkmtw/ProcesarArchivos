@@ -28,7 +28,8 @@ class ArchivoHiscar(models.Model):
         blank=True,
         null=True,
         related_name="usuario_cargador")
-    archivo = models.FilePathField(path='hiscar/', allow_files=True, null=True)
+   
+    upload = models.FileField(upload_to='uploads/', null=True)
     peso = models.BigIntegerField()
     cant_lineas = models.IntegerField(null=True, blank=True, default=None)
     fecha = models.DateTimeField(default=now)
