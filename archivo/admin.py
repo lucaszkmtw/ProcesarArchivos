@@ -1,41 +1,43 @@
 from django.contrib import admin
 from django.contrib.admin.options import ModelAdmin
 from django.http import HttpResponseRedirect
-from archivo.models import ArchivoHiscar, CodigoLargo
+from archivo.models import ArchivoHiscar, Cargo, CodigoLargo, Reparticion, Hiscar
 from django.shortcuts import render
 
 # Register your models here.
 
 
-@admin.register(ArchivoHiscar)
 class ArchivoHiscarAdmin(admin.ModelAdmin):
     model = ArchivoHiscar
     list_filter = ('autor', 'fileHash')
     actions = [
-        'parse_file' 
+        'parse_file'
     ]
 
     def parse_file(self, request, queryset):
-        if 'apply' in request.POST:
-            for archivo in queryset:
-                file1 = open("media/{archivo}".format(), 'r')
-
-                for line in file1:
-                    linea = "{}".format(line.strip())
-                    CodigoLargo.codigo = linea
-                    CodigoLargo.save()
+        for archivo in queryset:
+            file1 = open("media/{}".format(str(archivo)), 'r')
+            count = 0
+            for line in file1:
+                count += 1
+                linea = "{}".format(line.strip())
+                codigoNuevo = CodigoLargo(
+                    codigo=linea
+                )
+                codigoNuevo.save()
 
             # Closing files
-                file1.close()
-                queryset.update(parsed=True)
-            self.message_user(request,
-                              "se han procesado {} archivos".format(queryset.count()))
-            return HttpResponseRedirect(request.get_full_path())
+            file1.close()
 
-        return render(request, 'admin/procesar.html', {'orders': queryset})
-
-
-   
+            queryset.update(parsed=True)
+        self.message_user(request,
+                          "Changed status on {} orders".format(queryset.count()))
+        return HttpResponseRedirect(request.get_full_path())
 
 
 admin.site.register(CodigoLargo)
+admin.site.register(ArchivoHiscar, ArchivoHiscarAdmin)
+admin.site.register(Reparticion)
+admin.site.register(Cargo)
+admin.site.register(Hiscar)
+
