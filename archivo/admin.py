@@ -10,13 +10,15 @@ from django.shortcuts import render
 class ArchivoHiscarAdmin(admin.ModelAdmin):
     model = ArchivoHiscar
     list_filter = ('autor', 'fileHash')
+    list_display = [
+      'archivo', 'fileHash', 'parsed']
     actions = [
         'parse_file'
     ]
 
     def parse_file(self, request, queryset):
         for archivo in queryset:
-            file1 = open("media/{}".format(str(archivo)), 'r')
+            file1 = open("uploads/{}".format(str(archivo)), 'r')
             count = 0
             for line in file1:
                 count += 1

@@ -54,7 +54,7 @@ class ArchivoHiscar(models.Model):
         blank=True,
         null=True,
         related_name="usuario_cargador")
-    archivo = models.FilePathField(path='media/', allow_files=True, null=True)
+    archivo = models.FilePathField(path='uploads/', allow_files=True, null=True)
     fecha = models.DateTimeField(default=now)
     parsed = models.BooleanField(default=False, null=True)
 
