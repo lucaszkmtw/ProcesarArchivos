@@ -31,8 +31,10 @@ class ArchivoHiscarAdmin(admin.ModelAdmin):
 
             queryset.update(parsed=True)
         self.message_user(request,
-                          "Changed status on {} orders".format(queryset.count()))
+                          "archivos procesados, se han obtenido {} hiscar ".format(queryset.count()))
         return HttpResponseRedirect(request.get_full_path())
+
+    parse_file.short_description = "Process %(verbose_name_plural)s seleccionados/as"
 
 
 admin.site.register(CodigoLargo)
@@ -40,4 +42,3 @@ admin.site.register(ArchivoHiscar, ArchivoHiscarAdmin)
 admin.site.register(Reparticion)
 admin.site.register(Cargo)
 admin.site.register(Hiscar)
-
