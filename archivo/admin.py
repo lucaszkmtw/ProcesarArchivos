@@ -10,8 +10,7 @@ from django.shortcuts import render
 class ArchivoHiscarAdmin(admin.ModelAdmin):
     model = ArchivoHiscar
     list_filter = ('autor', 'fileHash')
-    list_display = [
-      'archivo', 'fileHash', 'parsed']
+    list_display = ('__str__', 'fecha', 'parsed')
     actions = [
         'parse_file'
     ]
@@ -27,7 +26,6 @@ class ArchivoHiscarAdmin(admin.ModelAdmin):
                     codigo=linea
                 )
                 codigoNuevo.save()
-
             # Closing files
             file1.close()
 

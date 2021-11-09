@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.timezone import now
 from django.core.files import File
-
+import os
 # Create your models here.
 
 
@@ -54,13 +54,18 @@ class ArchivoHiscar(models.Model):
         blank=True,
         null=True,
         related_name="usuario_cargador")
-    archivo = models.FilePathField(path='uploads/', allow_files=True, null=True)
+    archivo = models.FilePathField(
+        path='uploads/', allow_files=True, null=True)
     fecha = models.DateTimeField(default=now)
     parsed = models.BooleanField(default=False, null=True)
 
     def __str__(self):
         if self.archivo:
-            return str(self.archivo.split('/')[-1])
+
+            nombre = str(self.archivo.split('/')[-1])
+            peso = float(os.path.getsize(self.archivo)) / 1024
+            peso  = str(peso)[0:4]
+            return f'{nombre}'
         else:
             return '-'
 
@@ -131,7 +136,6 @@ class Hiscar(models.Model):
         null=True,
         on_delete=models.DO_NOTHING,
         related_name="Reparticion_objecto")
-
 
     HLS = {
         'periodo': {'dd': 1, 'ht': 8},
