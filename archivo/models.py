@@ -4,6 +4,8 @@ from django.utils.timezone import now
 from django.core.files import File
 
 # Create your models here.
+
+
 class ArchivoHiscar(models.Model):
     """
     ArchivoHiscar : modelo que contiene los datos del archivo, del
@@ -28,9 +30,17 @@ class ArchivoHiscar(models.Model):
         blank=True,
         null=True,
         related_name="usuario_cargador")
-   
-    upload = models.FileField(upload_to='uploads/', null=True)
+    archivo = models.FilePathField(path='media/', allow_files=True, null=True)
     fecha = models.DateTimeField(default=now)
-  
+    parsed = models.BooleanField(default=False, null=True)
     def __str__(self):
-        return f'{self.fileHash}'.upper()
+        if self.archivo:
+            return str(self.archivo.split('/')[-1])
+        else:
+            return '-'
+
+
+class CodigoLargo(models.Model):
+    codigo = models.CharField(max_length=550, blank=True, null=True)
+    created    = models.DateTimeField(default=now)
+
