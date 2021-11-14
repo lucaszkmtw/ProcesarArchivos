@@ -15,6 +15,7 @@ def task(self, duration):
     for line in file1:
         linea = "{}".format(line.strip())
         lista.append(linea)
+        count = count + 1
         progreso.set_progress(count + 1 , duration, f'va por {count}')
     # Closing files
     file1.close()

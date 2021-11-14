@@ -8,7 +8,7 @@ import os
 
 def index(request):
 
-    peso = os.path.getsize('uploads/myfile.txt')/1024
+    peso = os.path.getsize('uploads/myfile.txt')/537
     tarea= task.delay(int(peso))
     context = {
         'tarea':tarea,
