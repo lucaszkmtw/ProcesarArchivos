@@ -10,12 +10,12 @@ from django.http import JsonResponse
 
 def index(request):
     # peso = os.path.getsize('uploads/myfile.txt')/537
-    # objetos = procesar.delay('uploads/myfile.txt',peso)
+    # objetos = task.delay(999)
 
     context = {
-        #     'peso':peso,
-        #     'task':objetos.task_id
-    }
+    #          'peso':peso,
+    #          'task':objetos.task_id
+     }
     return render(request, 'archivo/home.html', context)
 
 
@@ -27,5 +27,4 @@ def procesado(request):
         'id': id
     }
 
-    
     return JsonResponse(context)

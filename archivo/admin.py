@@ -10,6 +10,7 @@ import os
 from archivo import tasks
 from django.http import JsonResponse
 
+
 class ArchivoHiscarAdmin(admin.ModelAdmin):
     model = ArchivoHiscar
     list_filter = ('autor', 'fileHash')
@@ -26,13 +27,14 @@ class ArchivoHiscarAdmin(admin.ModelAdmin):
         ]
 
     def parse_file(self, request, queryset):
-            for archivo in queryset:
+        for archivo in queryset:
+            peso = os.path.getsize(str(archivo))/537
 
-                queryset.update(parsed=True)
+            queryset.update(parsed=True)
 
-            self.message_user(request,
-                              "archivos procesados, se han obtenido {} hiscar ".format(queryset.count()))
-            return HttpResponseRedirect(request.get_full_path())
+        self.message_user(request,
+                          "archivos procesados, se han obtenido {} hiscar ".format(queryset.count()))
+        return HttpResponseRedirect(request.get_full_path())
 
     parse_file.short_description = "Process %(verbose_name_plural)s seleccionados/as"
 
