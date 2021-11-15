@@ -1,0 +1,40 @@
+<!-- admin/order_intermediate.html -->
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <p>You're going to parse the following Hiscars:</p>
+        <ul>{{ items|unordered_list }}</ul>
+        <input type="hidden" name="action" value="parse_file" />
+        <input type="submit" name="apply" value="Send" id="aplly"/>
+
+    </form>
+<script>
+    $(document).ready(function () {
+
+        $("#aplly").click(function (e) { 
+            e.preventDefault();
+        
+            $.ajax({
+                url: "/procesar/",
+                dataType: "json",
+                success: function (response) {
+                var task = response.id;
+                console.log(task);
+                $(function () {
+                    var progressUrl = "/celery-progress/"+ task;
+                    CeleryProgressBar.initProgressBar(progressUrl)
+                  });
+                }
+            });
+        });
+        
+        
+        });
+
+
+
+</script>
+{% endblock %}

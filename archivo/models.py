@@ -5,6 +5,8 @@ from django.core.files import File
 import os
 # Create your models here.
 
+from django.utils.html import format_html
+
 
 class Reparticion(models.Model):
     codigo = models.CharField(max_length=6, db_index=True)
@@ -64,10 +66,25 @@ class ArchivoHiscar(models.Model):
 
             nombre = str(self.archivo.split('/')[-1])
             peso = float(os.path.getsize(self.archivo)) / 1024
-            peso  = str(peso)[0:4]
+            peso = str(peso)[0:4]
             return f'{nombre}'
         else:
             return '-'
+
+    def procesado(self):
+
+        return format_html(
+            '''
+             <div class='progress-wrapper'>
+        <div id='progress-bar' class='progress-bar' style="background-color: #68a9ef; width: 0%;">&nbsp;</div>
+    </div>
+
+    <div id="progress-bar-message">Waiting for progress to start...</div>
+ 
+
+            ''',
+
+        )
 
 
 class CodigoLargo(models.Model):

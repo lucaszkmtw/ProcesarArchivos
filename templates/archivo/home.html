@@ -11,43 +11,22 @@
 </head>
 
 <body>
-    <p id="task" value="http://localhost:8000/celery-progress/{{task}}/"> {{task}} </p>
-
-    <div class='progress-wrapper'>
+      <!-- <div class='progress-wrapper'>
         <div id='progress-bar' class='progress-bar' style="background-color: #68a9ef; width: 0%;">&nbsp;</div>
     </div>
+
     <div id="progress-bar-message">Waiting for progress to start...</div>
 
-
-
-    
-
+    <button class="aplly" id="aplly" type="submit">aceptar</button>
+  -->
 
 
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="{% static 'celery_progress/celery_progress.js' %}"></script>
+<script src="{% static 'js/home.js' %}"></script>
 
 
-
-
-
-
-<script>
-    var progressUrl = "/celery-progress/{{task}}/";
-
-    function customResult(resultElement, result) {
-      $( resultElement ).append(
-        $('<p>').text('Sum of all seconds is ' + result)
-      );
-    }
-    
-    $(function () {
-      CeleryProgressBar.initProgressBar(progressUrl, {
-        onResult: customResult,
-      })
-    });
-</script>
 
 
 </html>
