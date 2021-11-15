@@ -28,13 +28,7 @@ class ArchivoHiscarAdmin(admin.ModelAdmin):
     def parse_file(self, request, queryset):
         if request.method == "POST":
             for archivo in queryset:
-                procesado = procesar.delay(str(archivo))
-                id = procesado.task_id
-                context = {
-                    'ok': 'ok',
-                    'id': id
-                        }
-                return JsonResponse(context)
+                proceso = procesar.delay(str(archivo))
 
             queryset.update(parsed=True)
 

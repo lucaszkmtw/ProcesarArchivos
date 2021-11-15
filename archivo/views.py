@@ -19,8 +19,8 @@ def index(request):
     return render(request, 'archivo/home.html', context)
 
 
-def procesado(request, archivo):
-    proceso = procesado.delay(archivo)
+def procesado(request):
+    proceso = task.delay(999)
     id = proceso.task_id
     context = {
         'ok': 'ok',
