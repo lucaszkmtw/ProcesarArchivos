@@ -26,11 +26,9 @@ class ArchivoHiscarAdmin(admin.ModelAdmin):
         ]
 
     def parse_file(self, request, queryset):
-        if request.method == "POST":
             for archivo in queryset:
-                proceso = procesar.delay(str(archivo))
 
-            queryset.update(parsed=True)
+                queryset.update(parsed=True)
 
             self.message_user(request,
                               "archivos procesados, se han obtenido {} hiscar ".format(queryset.count()))
