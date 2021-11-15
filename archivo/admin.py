@@ -30,7 +30,7 @@ class ArchivoHiscarAdmin(admin.ModelAdmin):
         for archivo in queryset:
             peso = os.path.getsize(str(archivo))/537
 
-            queryset.update(parsed=True)
+        queryset.update(parsed=True)
 
         self.message_user(request,
                           "archivos procesados, se han obtenido {} hiscar ".format(queryset.count()))
